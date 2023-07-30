@@ -1,27 +1,27 @@
-from random import randint
+import random
 
-def return_birthday():
-    # Returns a number between 1-365
-    n = randint(1, 365)
-    return n
+def birthday_paradox_probability(num_people):
+    """Calculate the probability of at least two people sharing a birthday in a group."""
+    num_simulations = 100000  # Number of simulations to run
+    success_count = 0
+
+    for _ in range(num_simulations):
+        birthdays = set(random.randint(1, 365) for _ in range(num_people))
+        if len(birthdays) != num_people:
+            success_count += 1
+
+    probability = success_count / num_simulations
+    return probability
 
 def main():
-    iterations = []
-    for x in range(100000):
-        it = 1
-        arr = []
-        for n in range(23):
-            b = return_birthday()
-            arr.append(b)
+    num_people = 23  # Number of people in the group
 
-        if len(arr) == len(set(arr)):
-            iterations.append(it)
-        else:
-            it += 1
-    
-    print(f"Chance of the same birthday in a group of 23 people was {(sum(iterations)/100000)*100}%. The group of 23 people was ran 100000 iterations")
-    
-    return
+    probability = birthday_paradox_probability(num_people)
+    print(f"The probability of at least two people sharing a birthday in a group of {num_people} is approximately {probability*100:.2f}%")
 
-while True:
+    num_people = 70
+    probability = birthday_paradox_probability(num_people)
+    print(f"The probability of at least two people sharing a birthday in a group of {num_people} is approximately {probability*100:.2f}%")
+
+if __name__ == "__main__":
     main()
